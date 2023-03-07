@@ -19,15 +19,16 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.services.DepartmentService;
 
-//classe q controla o nosso MAINVIEW.FXML... 
+//classe q controla o nosso MAINVIEW.FXML...
 public class MainViewController implements Initializable{
 
+	
 	@FXML
 	private MenuItem menuItemSeller;
-
+	
 	@FXML
 	private MenuItem menuItemDepartment;
-
+	
 	@FXML
 	private MenuItem menuItemAbout;
 	
@@ -36,16 +37,17 @@ public class MainViewController implements Initializable{
 		System.out.println("onMenuItemSellerAction");
 	}
 	
-	
 	@FXML
 	public void onMenuItemDepartmentAction() {
-	
+		//o LOADVIEW chama o DESIGN em DepartmentList.fxml
 		loadView("/gui/DepartmentList.fxml", (DepartmentListController controller) -> {
+
 			controller.setDepartmentService(new DepartmentService());
+
 			controller.updateTableView();
 		});
 	}
-	
+
 	@FXML
 	public void onMenuItemAboutAction() {
 		loadView("/gui/About.fxml", x -> {});
@@ -56,27 +58,23 @@ public class MainViewController implements Initializable{
 		// TODO Auto-generated method stub
 	}
 	
-	//criando uma funcao para abrir outra tela... em q o ABSOLUTNAME
-	//vai receber o caminho de onde ta a outra tela, em FXML :)
+	
 	private synchronized <T> void loadView(String absoluteName, Consumer<T> initializingAction) {
-		
+	
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			
 			VBox newVBox = loader.load();
+			
 			Scene mainScene = Main.getMainScene();
 			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
 			
-	
 			Node mainMenu = mainVBox.getChildren().get(0);
-	
-			mainVBox.getChildren().clear();
-	
-			mainVBox.getChildren().add(mainMenu);
-	
-			mainVBox.getChildren().addAll(newVBox.getChildren());
-						
-			T controller = loader.getController();
 			
+			mainVBox.getChildren().clear();
+			mainVBox.getChildren().add(mainMenu);
+			mainVBox.getChildren().addAll(newVBox.getChildren());
+			T controller = loader.getController();	
 			initializingAction.accept(controller);
 		}
 		catch(IOException e) {

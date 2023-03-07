@@ -26,15 +26,14 @@ import javafx.stage.Stage;
 import model.entities.Department;
 import model.services.DepartmentService;
 
-
 public class DepartmentListController implements Initializable {
-	
 	
 	private DepartmentService service;
 	
 	
 	@FXML
 	private TableView<Department> tableViewDepartment;
+	
 	
 	@FXML
 	private TableColumn<Department, Integer> tableColumnId;
@@ -45,6 +44,7 @@ public class DepartmentListController implements Initializable {
 	@FXML
 	private Button btNew;
 	
+	//pegar os DADOS Q TA NO SERVICE e mostrar dentro do tableVIEW
 	private ObservableList<Department> obsList;
 	
 	
@@ -53,7 +53,8 @@ public class DepartmentListController implements Initializable {
 	@FXML
 	public void onBtNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		createDialogForm("/gui/DepartmentForm.fxml", parentStage);
+		Department obj = new Department();
+		createDialogForm(obj, "/gui/DepartmentForm.fxml", parentStage);
 	}
 	
 	public void setDepartmentService(DepartmentService service) {
@@ -62,41 +63,38 @@ public class DepartmentListController implements Initializable {
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		//chamando o metodo initializeNodes
-		initializeNodes();	
+		initializeNodes();
 	}
 
 	private void initializeNodes() {
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
-		
 		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
-
-		
-		//comando para q a tela fique em tela cheia...
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewDepartment.prefHeightProperty().bind(stage.heightProperty());
 	}
 	
-	//metodo q sera responsavel por ACESSAR O SERVICE, carregar os DEPARTMENT
+
 	public void updateTableView() {
 		if (service == null) {
 			throw new IllegalStateException("service was null");
 		}
-		//declarando uma LIST de DEPARTMENT, q recebe o OBJETO/VARIAVEL SERVICE
-		//q é do tipo DEPARTMENTSERVICE (o service) dai vamos chamar o METODO
-		//FIND ALL para pegar todos os dados q estao na LISTA q ta dentro da class
-		//DepartmentService
 		List<Department> list = service.findAll();
+
 		obsList = FXCollections.observableArrayList(list);
+
 		tableViewDepartment.setItems(obsList);
 	}
-	
 
-	private void createDialogForm(String absoluteName, Stage parentStage) {
+	private void createDialogForm(Department obj, String absoluteName, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+
 			Pane pane = loader.load();
 			
+			DepartmentFormController controller = loader.getController();
+			
+			controller.setDepertment(obj);
+			controller.updateFormData();
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Enter Department data");
 			dialogStage.setScene(new Scene(pane));
@@ -109,5 +107,5 @@ public class DepartmentListController implements Initializable {
 		catch (IOException e) {
 			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
-	}	
+	}
 }

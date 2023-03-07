@@ -9,9 +9,11 @@ import model.entities.Department;
 
 public class DepartmentService {
 	
+	
+	//declarando uma depedencia de departmentDAO (q é uma INTERFACE q serve para
+	//INSERIR ATUALIZAR e DELETAR dados do BD)
 	private DepartmentDao dao = DaoFactory.createDepartmentDao();
-	
-	
+		
 	
 	//criando um METODO chamado FINDALL q IRA retornar uma LIST com todos os
 	//DEPARTMENT do BANCO DE DADOS :)
