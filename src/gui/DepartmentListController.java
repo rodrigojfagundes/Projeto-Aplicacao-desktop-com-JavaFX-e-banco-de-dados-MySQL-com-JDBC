@@ -74,7 +74,6 @@ public class DepartmentListController implements Initializable, DataChangeListen
 	}
 
 	private void initializeNodes() {
-
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
 
 		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -84,7 +83,6 @@ public class DepartmentListController implements Initializable, DataChangeListen
 	}
 
 	public void updateTableView() {
-
 		if (service == null) {
 			throw new IllegalStateException("service was null");
 		}
@@ -97,9 +95,9 @@ public class DepartmentListController implements Initializable, DataChangeListen
 
 	private void createDialogForm(Department obj, String absoluteName, Stage parentStage) {
 		try {
-
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
+
 			DepartmentFormController controller = loader.getController();
 			controller.setDepertment(obj);
 			controller.setDepartmentService(new DepartmentService());
@@ -109,8 +107,11 @@ public class DepartmentListController implements Initializable, DataChangeListen
 
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Enter Department data");
+			
 			dialogStage.setScene(new Scene(pane));
+			
 			dialogStage.setResizable(false);
+			
 			dialogStage.initOwner(parentStage);
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.showAndWait();
@@ -138,6 +139,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 					setGraphic(null);
 					return;
 				}
+
 				setGraphic(button);
 				button.setOnAction(
 						event -> createDialogForm(obj, "/gui/DepartmentForm.fxml", Utils.currentStage(event)));
@@ -157,6 +159,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 					setGraphic(null);
 					return;
 				}
+
 				setGraphic(button);
 				button.setOnAction(event -> removeEntity(obj));
 			}

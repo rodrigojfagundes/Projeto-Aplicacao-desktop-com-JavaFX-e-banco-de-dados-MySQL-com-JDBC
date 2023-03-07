@@ -19,12 +19,11 @@ import javafx.scene.layout.VBox;
 import model.services.DepartmentService;
 import model.services.SellerService;
 
-
 public class MainViewController implements Initializable {
 
 	@FXML
 	private MenuItem menuItemSeller;
-
+	
 	@FXML
 	private MenuItem menuItemDepartment;
 
@@ -34,6 +33,7 @@ public class MainViewController implements Initializable {
 	@FXML
 	public void onMenuItemSellerAction() {
 		loadView("/gui/SellerList.fxml", (SellerListController controller) -> {
+
 			controller.setSellerService(new SellerService());
 			controller.updateTableView();
 		});
@@ -47,6 +47,7 @@ public class MainViewController implements Initializable {
 		});
 	}
 
+	// metodo para realizar as acoes do MenuItemABOUT
 	@FXML
 	public void onMenuItemAboutAction() {
 		loadView("/gui/About.fxml", x -> {
@@ -63,16 +64,14 @@ public class MainViewController implements Initializable {
 		try {
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+
 			VBox newVBox = loader.load();
 
 			Scene mainScene = Main.getMainScene();
 			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
 			Node mainMenu = mainVBox.getChildren().get(0);
-
 			mainVBox.getChildren().clear();
-
 			mainVBox.getChildren().add(mainMenu);
-
 			mainVBox.getChildren().addAll(newVBox.getChildren());
 
 			T controller = loader.getController();
