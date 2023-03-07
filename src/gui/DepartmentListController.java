@@ -26,12 +26,10 @@ import javafx.stage.Stage;
 import model.entities.Department;
 import model.services.DepartmentService;
 
-//classe department list controller q implementa a INTERFACE INITIALIZABLE
+
 public class DepartmentListController implements Initializable {
 	
-	//fazendo uma DEPENDENCIA do DEPARTMENT SERVICE, para carregar os DADOS
-	//q estao cadastrados no DEPARTMENT ID NOME... e vamos chamar essa dependencia
-	//de SERVICE
+	
 	private DepartmentService service;
 	
 	
@@ -57,74 +55,59 @@ public class DepartmentListController implements Initializable {
 		Stage parentStage = Utils.currentStage(event);
 		createDialogForm("/gui/DepartmentForm.fxml", parentStage);
 	}
-	 
+	
 	public void setDepartmentService(DepartmentService service) {
 		this.service = service;
 	}
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		initializeNodes();
+		//chamando o metodo initializeNodes
+		initializeNodes();	
 	}
 
 	private void initializeNodes() {
-
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		
-		//acessando o tableCOLUMNNAE e pegando os dados q estao dentro de NAME
 		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
 		
 		//comando para q a tela fique em tela cheia...
 		Stage stage = (Stage) Main.getMainScene().getWindow();
-
 		tableViewDepartment.prefHeightProperty().bind(stage.heightProperty());
 	}
 	
 	//metodo q sera responsavel por ACESSAR O SERVICE, carregar os DEPARTMENT
-	//ou seja o NOME e o ID
 	public void updateTableView() {
 		if (service == null) {
 			throw new IllegalStateException("service was null");
 		}
-
+		//declarando uma LIST de DEPARTMENT, q recebe o OBJETO/VARIAVEL SERVICE
+		//q é do tipo DEPARTMENTSERVICE (o service) dai vamos chamar o METODO
+		//FIND ALL para pegar todos os dados q estao na LISTA q ta dentro da class
+		//DepartmentService
 		List<Department> list = service.findAll();
-
 		obsList = FXCollections.observableArrayList(list);
-
 		tableViewDepartment.setItems(obsList);
 	}
+	
 
 	private void createDialogForm(String absoluteName, Stage parentStage) {
 		try {
-			//implementando a logica para abrir a JANELINHA de formulario
-			//para CAD as pessoas
-			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-			//chamando o painel PANE para carregar a tela 
 			Pane pane = loader.load();
 			
-			//criando um cenario/stage novo
 			Stage dialogStage = new Stage();
-			//informando q vai ser um DIALOG STAGE ou seja... q vai ser uma
-			//janela pequena q ira aparecer o formulario para add um novo
-			//departamento
 			dialogStage.setTitle("Enter Department data");
-		
 			dialogStage.setScene(new Scene(pane));
-		
 			dialogStage.setResizable(false);
-		
 			dialogStage.initOwner(parentStage);
-		
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.showAndWait();
 		}
-		
+
 		catch (IOException e) {
 			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
-	}
-	
-	
+	}	
 }

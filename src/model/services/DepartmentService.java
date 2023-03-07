@@ -7,13 +7,12 @@ import model.dao.DaoFactory;
 import model.dao.DepartmentDao;
 import model.entities.Department;
 
-
 public class DepartmentService {
 	
-	
-
 	private DepartmentDao dao = DaoFactory.createDepartmentDao();
-		
+	
+	
+	
 	//criando um METODO chamado FINDALL q IRA retornar uma LIST com todos os
 	//DEPARTMENT do BANCO DE DADOS :)
 	public List<Department> findAll(){

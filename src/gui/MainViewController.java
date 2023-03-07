@@ -1,4 +1,6 @@
 package gui;
+
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,26 +19,27 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.services.DepartmentService;
 
+//classe q controla o nosso MAINVIEW.FXML... 
 public class MainViewController implements Initializable{
 
-	//itens de controle de tela. q correspondem ao menu do GUI...
-	
 	@FXML
 	private MenuItem menuItemSeller;
-	
+
 	@FXML
 	private MenuItem menuItemDepartment;
 
 	@FXML
 	private MenuItem menuItemAbout;
-
+	
 	@FXML
 	public void onMenuItemSellerAction() {
 		System.out.println("onMenuItemSellerAction");
 	}
 	
+	
 	@FXML
 	public void onMenuItemDepartmentAction() {
+	
 		loadView("/gui/DepartmentList.fxml", (DepartmentListController controller) -> {
 			controller.setDepartmentService(new DepartmentService());
 			controller.updateTableView();
@@ -45,7 +48,6 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	public void onMenuItemAboutAction() {
-		//passando para o LOADVIEW o local q esta o DESIGN da tela do ABOUT
 		loadView("/gui/About.fxml", x -> {});
 	}
 	
@@ -54,26 +56,23 @@ public class MainViewController implements Initializable{
 		// TODO Auto-generated method stub
 	}
 	
-	//criando uma funcao para abrir outra tela... 
+	//criando uma funcao para abrir outra tela... em q o ABSOLUTNAME
+	//vai receber o caminho de onde ta a outra tela, em FXML :)
 	private synchronized <T> void loadView(String absoluteName, Consumer<T> initializingAction) {
 		
 		try {
-			
-			//chamando o FXMLLoader para abrir uma tela em FXML
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			VBox newVBox = loader.load();
-			
 			Scene mainScene = Main.getMainScene();
-			
 			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
 			
-			
+	
 			Node mainMenu = mainVBox.getChildren().get(0);
-			
+	
 			mainVBox.getChildren().clear();
-			
+	
 			mainVBox.getChildren().add(mainMenu);
-			
+	
 			mainVBox.getChildren().addAll(newVBox.getChildren());
 						
 			T controller = loader.getController();
