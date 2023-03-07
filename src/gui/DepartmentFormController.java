@@ -24,6 +24,7 @@ import model.exceptions.ValidationException;
 import model.services.DepartmentService;
 
 public class DepartmentFormController implements Initializable {
+	
 
 	private Department entity;
 
@@ -31,7 +32,6 @@ public class DepartmentFormController implements Initializable {
 
 	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 	
-
 	@FXML
 	private TextField txtId;
 	
@@ -65,11 +65,14 @@ public class DepartmentFormController implements Initializable {
 			throw new IllegalStateException("entity wall null");
 		}
 
+
 		if (service == null) {
 			throw new IllegalStateException("service was null");
 		}
-		try { 
+		try {
+ 
 			entity = getFormData();
+
 			service.SaveOrUpdate(entity);
 			notifyDataChangeListeners();
 			
@@ -83,24 +86,21 @@ public class DepartmentFormController implements Initializable {
 			Alerts.showAlert("error saving objet", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
-		
-	//metodo notifyDataChangeListeners... Q ira notificar o software
-	//quando foi ADD um novo departamento no BANCO
+
 	private void notifyDataChangeListeners() {
+
 		for(DataChangeListener listener: dataChangeListeners) {
 			listener.onDataChanged();
 		}
 		
 	}
 
-	//um metodo responsavel por pegar os dados
-	//q foram digitados no camp de CAD DEPARTAMENTO e instanciar um departamento
+
 	private Department getFormData() {
 		Department obj = new Department();
-
-		
+	
 		ValidationException exception = new ValidationException("validation error");
-		
+
 		obj.setId(Utils.tryParseToInt(txtId.getText()));
 		
 		if(txtName.getText() == null || txtName.getText().trim().equals(""))
@@ -111,9 +111,9 @@ public class DepartmentFormController implements Initializable {
 		obj.setName(txtName.getText());
 
 		if(exception.getErros().size() > 0) {
-			//entao lancamos a excessao
 			throw exception;
 		}
+		
 		return obj;
 	}
 
@@ -144,8 +144,9 @@ public class DepartmentFormController implements Initializable {
 	}
 		 
 		private void setErrorMessages(Map<String, String> errors) {
-		
+			//percorrendo o map com o CONJUNTO / SET
 			Set<String> fields = errors.keySet();
+
 			if(fields.contains("name"));
 			labelErrorName.setText(errors.get("name"));
 		}
