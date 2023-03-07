@@ -32,7 +32,7 @@ import javafx.stage.Stage;
 import model.entities.Department;
 import model.services.DepartmentService;
 
-//classe department list controller q implementa a INTERFACE INITIALIZABLE e
+
 //a DataChangeListener (q fica ouvindo quando algum departamento e ADD no BD)
 public class DepartmentListController implements Initializable, DataChangeListener {
 
@@ -81,6 +81,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
+
 		tableViewDepartment.prefHeightProperty().bind(stage.heightProperty());
 	}
 
@@ -88,8 +89,11 @@ public class DepartmentListController implements Initializable, DataChangeListen
 		if (service == null) {
 			throw new IllegalStateException("service was null");
 		}
+
 		List<Department> list = service.findAll();
+
 		obsList = FXCollections.observableArrayList(list);
+
 		tableViewDepartment.setItems(obsList);
 
 		initEditButtons();
@@ -101,34 +105,33 @@ public class DepartmentListController implements Initializable, DataChangeListen
 		try {
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+
 			Pane pane = loader.load();
-			
+
 			DepartmentFormController controller = loader.getController();
 
 			controller.setDepertment(obj);
 
 			controller.setDepartmentService(new DepartmentService());
+
 			controller.subscribeDataChangeListener(this);
 
 			controller.updateFormData();
 
-			// criando um cenario/stage novo
 			Stage dialogStage = new Stage();
-			// informando q vai ser um DIALOG STAGE ou seja... q vai ser uma
-			// janela pequena q ira aparecer o formulario para add um novo
-			// departamento
+
 			dialogStage.setTitle("Enter Department data");
-			// informando q o PANE/PAINEL vai ser o elemento RAIZ da CENA
+
 			dialogStage.setScene(new Scene(pane));
-			// informando q nao podemos mudar o tamanho da janela
+
 			dialogStage.setResizable(false);
-			// informando qual o stage/cenario é o PAI da janela
+
 			dialogStage.initOwner(parentStage);
-			// informando q a janela vai ser MODAL ou SEJA vai ficar TRAVADA
-			// e enuanto nao fechar ela nao pode mexer na janela q ta de baixo
+
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.showAndWait();
 		}
+
 		catch (IOException e) {
 			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
@@ -138,6 +141,8 @@ public class DepartmentListController implements Initializable, DataChangeListen
 	public void onDataChanged() {
 		updateTableView();
 	}
+
+
 
 	private void initEditButtons() {
 		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
@@ -152,7 +157,6 @@ public class DepartmentListController implements Initializable, DataChangeListen
 					setGraphic(null);
 					return;
 				}
-
 				setGraphic(button);
 				button.setOnAction(
 						event -> createDialogForm(obj, "/gui/DepartmentForm.fxml", Utils.currentStage(event)));
@@ -172,7 +176,6 @@ public class DepartmentListController implements Initializable, DataChangeListen
 					setGraphic(null);
 					return;
 				}
-
 				setGraphic(button);
 				button.setOnAction(event -> removeEntity(obj));
 			}
@@ -180,7 +183,6 @@ public class DepartmentListController implements Initializable, DataChangeListen
 	}
 
 	private void removeEntity(Department obj) {
-
 		Optional<ButtonType> result = Alerts.showConfirmation("Confirmation", "Are you sure to delete?");
 	
 		if(result.get() == ButtonType.OK) {
@@ -188,7 +190,6 @@ public class DepartmentListController implements Initializable, DataChangeListen
 				throw new IllegalStateException("service was null");
 			}
 			try {
-
 			service.remove(obj);
 			updateTableView();
 			}

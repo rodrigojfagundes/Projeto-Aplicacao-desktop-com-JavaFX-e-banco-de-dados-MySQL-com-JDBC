@@ -7,8 +7,6 @@ public class ValidationException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 	
-	//para carregar os erros na excessao vamos chamar um MAP
-	//String String... MAP é uma colecao de CHAVE:VALOR
 	private Map<String, String> errors = new HashMap<>();
 	
 	
