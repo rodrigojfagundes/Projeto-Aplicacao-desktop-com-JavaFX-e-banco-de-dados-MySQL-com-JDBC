@@ -25,8 +25,7 @@ public class Main extends Application {
 			
 			//criando a CENA passando o SCROLLPANE como argumento
 			Scene mainScene = new Scene(scrollPane);
-			//palco da cena... o MAINSCENE é a CENA PRINCIPAL... eu acho q
-			//tela inicial EU ACHO
+			//palco da cena... o MAINSCENE é a CENA PRINCIPAL...
 			primaryStage.setScene(mainScene);
 			primaryStage.setTitle("Sample JavaFX application");
 			primaryStage.show();
