@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.dao.DaoFactory;
-import model.dao.DepartmentDao;
-import model.entities.Department;
+import model.dao.SellerDao;
+import model.entities.Seller;
 
-public class DepartmentService {
+public class SellerService {
 	
-	private DepartmentDao dao = DaoFactory.createDepartmentDao();
+	private SellerDao dao = DaoFactory.createSellerDao();
 	
-	public List<Department> findAll(){
+	public List<Seller> findAll(){
 		return dao.findAll();
 	}
 	
-	public void SaveOrUpdate(Department obj) {
+	public void SaveOrUpdate(Seller obj) {
 	
 		if(obj.getId() == null) {
 			dao.insert(obj);
@@ -25,7 +25,7 @@ public class DepartmentService {
 		}
 	}
 	
-	public void remove (Department obj) {
+	public void remove (Seller obj) {
 		dao.deleteById(obj.getId());
 	}
 }

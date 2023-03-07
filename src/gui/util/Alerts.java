@@ -16,8 +16,6 @@ public class Alerts {
 		alert.show();
 	}
 	
-	//metodo SHOWCONFIRMATION, vai perguntar se o USUARIO realmente quer DELETAR o DEPARTAMENTO
-	//com um botao OPICIONAL de SIM e NAO
 	public static Optional<ButtonType> showConfirmation(String title, String content) { 
 	 Alert alert = new Alert(AlertType.CONFIRMATION); 
 	alert.setTitle(title); 
@@ -25,6 +23,4 @@ public class Alerts {
 	alert.setContentText(content); 
 	return alert.showAndWait(); 
 	}
-	
-	
 }

@@ -24,7 +24,7 @@ import model.exceptions.ValidationException;
 import model.services.DepartmentService;
 
 public class DepartmentFormController implements Initializable {
-	
+
 	private Department entity;
 
 	private DepartmentService service;
@@ -45,7 +45,8 @@ public class DepartmentFormController implements Initializable {
 	
 	@FXML
 	private Button btCancel;
-
+	
+	
 	public void setDepertment(Department entity) {
 		this.entity = entity;
 	}
@@ -60,51 +61,56 @@ public class DepartmentFormController implements Initializable {
 
 	@FXML
 	public void ontBtSaveAction(ActionEvent event) {
+	
 		if(entity == null) {
 			throw new IllegalStateException("entity wall null");
 		}
+	
 		if (service == null) {
 			throw new IllegalStateException("service was null");
 		}
-		try { 
+		try {
+	 
 			entity = getFormData();
-
+	
 			service.SaveOrUpdate(entity);
+	
 			notifyDataChangeListeners();
-			
+	
 			Utils.currentStage(event).close();
 		}
 		catch(ValidationException e) {
 			setErrorMessages(e.getErros());		
 		}
-		
+	
 		catch(DbException e) {
 			Alerts.showAlert("error saving objet", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
 	
-	//metodo notifyDataChangeListeners... Q ira notificar o software
-	//quando foi ADD um novo departamento no BANCO
 	private void notifyDataChangeListeners() {
+	
 		for(DataChangeListener listener: dataChangeListeners) {
 			listener.onDataChanged();
 		}
+		
 	}
 
 	private Department getFormData() {
-		Department obj = new Department();
-		
+		Department obj = new Department();		
 		ValidationException exception = new ValidationException("validation error");
+		
 		obj.setId(Utils.tryParseToInt(txtId.getText()));
 		
 		if(txtName.getText() == null || txtName.getText().trim().equals(""))
 		{
+		
 			exception.addError("name", "field can't be empty");
 		}
 		obj.setName(txtName.getText());
 		
 		if(exception.getErros().size() > 0) {
-			//entao lancamos a excessao
+		
 			throw exception;
 		}
 		
@@ -125,20 +131,23 @@ public class DepartmentFormController implements Initializable {
 		Constraints.setTextFieldInteger(txtId);
 		Constraints.setTextFieldMaxLength(txtName, 30);
 	}
+
 		public void updateFormData() {
+
 			if (entity == null) {
 				throw new IllegalStateException("entity wass null");
 			}
-			
+
 			txtId.setText(String.valueOf(entity.getId()));
 			txtName.setText(entity.getName());
 		
 	}
-
+ 
 		private void setErrorMessages(Map<String, String> errors) {
 			Set<String> fields = errors.keySet();
 			
 			if(fields.contains("name"));
+			
 			labelErrorName.setText(errors.get("name"));
 		}
 		
