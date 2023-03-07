@@ -19,18 +19,13 @@ import model.services.DepartmentService;
 
 public class DepartmentListController implements Initializable {
 	
-	//fazendo uma DEPENDENCIA do DEPARTMENT SERVICE, para carregar os DADOS
-	//q estao cadastrados no DEPARTMENT ID NOME... e vamos chamar essa dependencia
-	//de SERVICE
+
 	private DepartmentService service;
 	
 	
-	//referencias para a tela de DEPARTMENT LIST...
-	//temos um BOTAO na TOOLBAR e temos um TABLEVIEW q tem um ID e NAME 
-			//referencia para tableview
 	@FXML
 	private TableView<Department> tableViewDepartment;
-
+	
 	@FXML
 	private TableColumn<Department, Integer> tableColumnId;
 	
@@ -41,6 +36,7 @@ public class DepartmentListController implements Initializable {
 	private Button btNew;
 	
 	//pegar os DADOS Q TA NO SERVICE e mostrar dentro do tableVIEW
+		//criando uma LIST do TIPO OBSERVABLE q sera uma LISTA DE DEPARTMENT
 	private ObservableList<Department> obsList;
 	
 	
@@ -60,6 +56,7 @@ public class DepartmentListController implements Initializable {
 		initializeNodes();	
 	}
 
+
 	private void initializeNodes() {
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		
@@ -74,12 +71,14 @@ public class DepartmentListController implements Initializable {
 	//metodo q sera responsavel por ACESSAR O SERVICE, carregar os DEPARTMENT
 	//ou seja o NOME e o ID e jogar esses DEPARTMENT na OBSERVABLELIST
 	public void updateTableView() {
-		//se o service for NULL...
 		if (service == null) {
 			throw new IllegalStateException("service was null");
 		}
+
 		List<Department> list = service.findAll();
+
 		obsList = FXCollections.observableArrayList(list);
+
 		tableViewDepartment.setItems(obsList);
 	}
 	

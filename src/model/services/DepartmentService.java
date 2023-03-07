@@ -3,18 +3,23 @@ package model.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.dao.DaoFactory;
+import model.dao.DepartmentDao;
 import model.entities.Department;
 
+
 public class DepartmentService {
+	
+	private DepartmentDao dao = DaoFactory.createDepartmentDao();
+	
+	
 	
 	//criando um METODO chamado FINDALL q IRA retornar uma LIST com todos os
 	//DEPARTMENT do BANCO DE DADOS :)
 	public List<Department> findAll(){
-		//dados de teste... Q NAO ESTAO VINDO DO BANCO DE DADOS
-		List<Department> list = new ArrayList<>();
-		list.add(new Department(1, "books"));
-		list.add(new Department(2, "computers"));
-		list.add(new Department(3, "eletronics"));
-		return list;
+		//chamando o DAO (objeto/variavel) q ciramos ali em CIMA q é do tipo
+		//DEPARTMENTDAO... E chamando o METODO FINDALL que irá retornar uma LISTA
+		//com os DEPARTAMENTOS CADASTRADOS... no BANCO DE DADOS
+		return dao.findAll();
 	}
 }
