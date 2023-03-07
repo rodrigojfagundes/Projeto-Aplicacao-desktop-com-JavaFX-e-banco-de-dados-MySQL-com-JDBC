@@ -9,13 +9,16 @@ import model.entities.Department;
 
 public class DepartmentService {
 	
+
 	private DepartmentDao dao = DaoFactory.createDepartmentDao();
-	
 	
 	public List<Department> findAll(){
 		return dao.findAll();
 	}
 	
+	//crianod uma operação/metodo q vai receber um DEPARTMENT como OBJETO/VARIAVEL
+	//ATRIBUTO... e vai verificar SE é para INSERIR ou ATUALIZAR O DEPARTMENT
+	//existente
 	public void SaveOrUpdate(Department obj) {
 		if(obj.getId() == null) {
 			dao.insert(obj);
