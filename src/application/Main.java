@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 	
+
 	private static Scene mainScene;
 	
 	@Override
@@ -18,7 +19,6 @@ public class Main extends Application {
 			//definindo onde ta o FXML... e nesse FXML ta COMO VAI SER A INTERFACE
 			//GRAFICA (GUI) do software
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/MainView.fxml"));
-
 			ScrollPane scrollPane = loader.load();
 			
 			scrollPane.setFitToHeight(true);

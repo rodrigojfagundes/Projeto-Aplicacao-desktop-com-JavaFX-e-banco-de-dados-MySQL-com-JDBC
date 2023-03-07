@@ -27,13 +27,12 @@ import model.entities.Department;
 import model.services.DepartmentService;
 
 public class DepartmentListController implements Initializable {
-	
+
 	private DepartmentService service;
 	
 	
 	@FXML
 	private TableView<Department> tableViewDepartment;
-	
 	
 	@FXML
 	private TableColumn<Department, Integer> tableColumnId;
@@ -44,12 +43,13 @@ public class DepartmentListController implements Initializable {
 	@FXML
 	private Button btNew;
 	
-	//pegar os DADOS Q TA NO SERVICE e mostrar dentro do tableVIEW
 	private ObservableList<Department> obsList;
 	
 	
 	//metodo de tratamento do botao... Para QUANDO CLICAR NO BOTAO
 	//carregar a telinha com os campos para cadastrar um novo produto
+	//o actionEvent serve para dizer em QUAL janela foi a q usamos para clicar
+	//no botao para CAD um novo departamento
 	@FXML
 	public void onBtNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
@@ -57,49 +57,73 @@ public class DepartmentListController implements Initializable {
 		createDialogForm(obj, "/gui/DepartmentForm.fxml", parentStage);
 	}
 	
+	
 	public void setDepartmentService(DepartmentService service) {
 		this.service = service;
 	}
 	
+	
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		initializeNodes();
+		
+		
 	}
 
 	private void initializeNodes() {
+		
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
+
 		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+
 		Stage stage = (Stage) Main.getMainScene().getWindow();
+
 		tableViewDepartment.prefHeightProperty().bind(stage.heightProperty());
 	}
-	
 
 	public void updateTableView() {
+
 		if (service == null) {
 			throw new IllegalStateException("service was null");
 		}
+
 		List<Department> list = service.findAll();
 
 		obsList = FXCollections.observableArrayList(list);
 
 		tableViewDepartment.setItems(obsList);
 	}
+	
 
 	private void createDialogForm(Department obj, String absoluteName, Stage parentStage) {
 		try {
+
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 
 			Pane pane = loader.load();
 			
-			DepartmentFormController controller = loader.getController();
 			
+			DepartmentFormController controller = loader.getController();
+
 			controller.setDepertment(obj);
+
+			controller.setDepartmentService(new DepartmentService());
+			
+
 			controller.updateFormData();
+
 			Stage dialogStage = new Stage();
+
 			dialogStage.setTitle("Enter Department data");
+
 			dialogStage.setScene(new Scene(pane));
+
 			dialogStage.setResizable(false);
+
 			dialogStage.initOwner(parentStage);
+
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.showAndWait();
 		}
@@ -108,4 +132,6 @@ public class DepartmentListController implements Initializable {
 			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
 	}
+	
+	
 }

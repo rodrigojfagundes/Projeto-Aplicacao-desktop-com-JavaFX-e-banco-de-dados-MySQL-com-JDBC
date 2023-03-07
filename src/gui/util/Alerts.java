@@ -3,7 +3,6 @@ package gui.util;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-//criando a classe alerts
 public class Alerts {
 	
 	//metodo show alerts q recebe alguns atributos como title, header, contentet
