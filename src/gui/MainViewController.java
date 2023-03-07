@@ -17,8 +17,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
-//classe q controla o nosso MAINVIEW.FXML... essa classe vai IMPLEMENTAR a
-//INTERFACE INITIALIZABLE
 public class MainViewController implements Initializable{
 
 	//itens de controle de tela. q correspondem ao menu do GUI...
@@ -33,8 +31,7 @@ public class MainViewController implements Initializable{
 	private MenuItem menuItemAbout;
 	
 	//a baixo, vamos declarar OS METODOS para REALIZAR AS ACOES dos ITENS
-	//de MENU
-	
+	//de MENU (MENUITEM)
 	
 	@FXML
 	public void onMenuItemSellerAction() {
@@ -57,11 +54,9 @@ public class MainViewController implements Initializable{
 		// TODO Auto-generated method stub
 	}
 	
-	//criando uma funcao para abrir outra tela... em q o ABSOLUTNAME
-	//vai receber o caminho de onde ta a outra tela, em FXML :)
+	//criando uma funcao para abrir outra tela...
 	private synchronized void loadView(String absoluteName) {
 		
-		//bloco TRY
 		try {
 			
 			//chamando o FXMLLoader para abrir uma tela em FXML
@@ -71,26 +66,19 @@ public class MainViewController implements Initializable{
 			
 			//mostrando a VIEW nova q foi carregada dentro da janela principal
 			Scene mainScene = Main.getMainScene();
-			//pegando a referencia para os FILHOS<children> da JANELA PRINCIPAL
-			//o VBOX do MainView.fxml, para saber se ta no registration ou help...
 			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
 			
-			//guardando uma referencia para o menu... no caso estamos pegando o
-			//PRIMEIRO FIlho do VBOX da janela principal no caso e o MAINMENU
+			
+			//guardando uma referencia para o menu... 
 			Node mainMenu = mainVBox.getChildren().get(0);
-			//chamando o MAINVBOX feito ali em cima, e limpando todos os filhos
-			//dele
+		
 			mainVBox.getChildren().clear();
-			//agora vamos ADD o MAINMENU (eu ACHO q é aquela barrinha de MENUS
-			//q fica na parte de cima do software)
+		
 			mainVBox.getChildren().add(mainMenu);
-			//adicionando os filhos do NEWVBOX... ou seja o filhos da janela q
-			//estamos abrindo
+		
 			mainVBox.getChildren().addAll(newVBox.getChildren());
 		}
-		//tratando a excecao
 		catch(IOException e) {
-			//chamando a classe ALERTS(q é utilizada para caso de excessao)
 			Alerts.showAlert("IO Exception", "error loading view", e.getMessage(), AlertType.ERROR);
 			
 		}

@@ -10,11 +10,12 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 	
-
+	
+	//guardando a referencia da scena/cena
 	private static Scene mainScene;
 	
 	@Override
-
+	//classe INICIO
 	public void start(Stage primaryStage) {
 		try {
 			//definindo onde ta o FXML... e nesse FXML ta COMO VAI SER A INTERFACE
@@ -29,6 +30,7 @@ public class Main extends Application {
 			
 			//criando a CENA passando o SCROLLPANE como argumento
 			mainScene = new Scene(scrollPane);
+			//palco da cena... o MAINSCENE é a CENA PRINCIPAL...
 			primaryStage.setScene(mainScene);
 			primaryStage.setTitle("Sample JavaFX application");
 			primaryStage.show();
