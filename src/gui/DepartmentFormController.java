@@ -3,7 +3,9 @@ package gui;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import db.DbException;
 import gui.listeners.DataChangeListener;
@@ -18,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Department;
+import model.exceptions.ValidationException;
 import model.services.DepartmentService;
 
 public class DepartmentFormController implements Initializable {
@@ -25,9 +28,10 @@ public class DepartmentFormController implements Initializable {
 	private Department entity;
 
 	private DepartmentService service;
-	
+
 	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 	
+
 	@FXML
 	private TextField txtId;
 	
@@ -52,7 +56,6 @@ public class DepartmentFormController implements Initializable {
 	}
 	
 	public void subscribeDataChangeListener(DataChangeListener listener) {
-		//ou seja vamos add ele na lista
 		dataChangeListeners.add(listener);
 	}
 
@@ -61,41 +64,56 @@ public class DepartmentFormController implements Initializable {
 		if(entity == null) {
 			throw new IllegalStateException("entity wall null");
 		}
-		
+
 		if (service == null) {
 			throw new IllegalStateException("service was null");
 		}
-		try {
-		 
+		try { 
 			entity = getFormData();
-		
 			service.SaveOrUpdate(entity);
-		
 			notifyDataChangeListeners();
 			
 			Utils.currentStage(event).close();
 		}
-
+		catch(ValidationException e) {
+			setErrorMessages(e.getErros());		
+		}
+		
 		catch(DbException e) {
 			Alerts.showAlert("error saving objet", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
-
+		
+	//metodo notifyDataChangeListeners... Q ira notificar o software
+	//quando foi ADD um novo departamento no BANCO
 	private void notifyDataChangeListeners() {
 		for(DataChangeListener listener: dataChangeListeners) {
 			listener.onDataChanged();
 		}
 		
 	}
-	
+
+	//um metodo responsavel por pegar os dados
+	//q foram digitados no camp de CAD DEPARTAMENTO e instanciar um departamento
 	private Department getFormData() {
 		Department obj = new Department();
+
 		
+		ValidationException exception = new ValidationException("validation error");
 		
 		obj.setId(Utils.tryParseToInt(txtId.getText()));
 		
+		if(txtName.getText() == null || txtName.getText().trim().equals(""))
+		{
+			exception.addError("name", "field can't be empty");
+		}
+
 		obj.setName(txtName.getText());
-		
+
+		if(exception.getErros().size() > 0) {
+			//entao lancamos a excessao
+			throw exception;
+		}
 		return obj;
 	}
 
@@ -108,20 +126,28 @@ public class DepartmentFormController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		initializeNodes();
 	}
-
-
+	
 	private void initializeNodes() {
 		Constraints.setTextFieldInteger(txtId);
 		Constraints.setTextFieldMaxLength(txtName, 30);
 	}
-		//o metodo UPDATEFORM DATA e responsavel por pegar os dados do 
-		//ENTITY e "POPULAR/escrever" as caixinhas do formulario, para 
-		//na hora q for ATUALIZAR saber os dados q tavam escritos antes
+
 		public void updateFormData() {
+
 			if (entity == null) {
 				throw new IllegalStateException("entity wass null");
 			}
+
 			txtId.setText(String.valueOf(entity.getId()));
 			txtName.setText(entity.getName());
+		
 	}
+		 
+		private void setErrorMessages(Map<String, String> errors) {
+		
+			Set<String> fields = errors.keySet();
+			if(fields.contains("name"));
+			labelErrorName.setText(errors.get("name"));
+		}
+		
 }

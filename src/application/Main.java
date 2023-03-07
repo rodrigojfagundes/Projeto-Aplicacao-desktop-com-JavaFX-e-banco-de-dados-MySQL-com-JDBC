@@ -20,9 +20,10 @@ public class Main extends Application {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/MainView.fxml"));
 			ScrollPane scrollPane = loader.load();
 			
+			//deixando o SCROLLPANE ajustado a janela
 			scrollPane.setFitToHeight(true);
 			scrollPane.setFitToWidth(true);
-			
+
 			mainScene = new Scene(scrollPane);
 
 			primaryStage.setScene(mainScene);
@@ -32,7 +33,7 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static Scene getMainScene() {
 		return mainScene;
 	}

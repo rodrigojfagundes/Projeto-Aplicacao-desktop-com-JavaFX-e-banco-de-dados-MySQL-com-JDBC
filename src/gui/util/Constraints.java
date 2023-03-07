@@ -2,6 +2,7 @@ package gui.util;
 
 import javafx.scene.control.TextField;
 
+//criando a classe constraints
 public class Constraints {
 	
 	//criando o metodo recebe um TextField
@@ -21,7 +22,6 @@ public class Constraints {
 	        }
 	    });
 	}
-
 
 	public static void setTextFieldDouble(TextField txt) {
 		txt.textProperty().addListener((obs, oldValue, newValue) -> {

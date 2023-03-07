@@ -31,30 +31,32 @@ public class DepartmentListController implements Initializable, DataChangeListen
 	
 	private DepartmentService service;
 	
-
 	@FXML
 	private TableView<Department> tableViewDepartment;
-
+	
 	@FXML
 	private TableColumn<Department, Integer> tableColumnId;
-
+	
 	@FXML
 	private TableColumn<Department, String> tableColumnName;
-
+	
 	@FXML
 	private Button btNew;
 	
 	private ObservableList<Department> obsList;
 	
 	
+	//metodo de tratamento do botao... Para QUANDO CLICAR NO BOTAO
+	//carregar a telinha com os campos para cadastrar um novo produto
+	//o actionEvent serve para dizer em QUAL janela foi a q usamos para clicar
+	//no botao para CAD um novo departamento
 	@FXML
 	public void onBtNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-	
 		Department obj = new Department();
 		createDialogForm(obj, "/gui/DepartmentForm.fxml", parentStage);
 	}
-	
+	 
 	public void setDepartmentService(DepartmentService service) {
 		this.service = service;
 	}
@@ -62,8 +64,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		initializeNodes();
-		
+		initializeNodes();		
 		
 	}
 
@@ -72,29 +73,30 @@ public class DepartmentListController implements Initializable, DataChangeListen
 		
 		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-		
-		//comando para q a tela fique em tela cheia...
 		Stage stage = (Stage) Main.getMainScene().getWindow();
+
 		tableViewDepartment.prefHeightProperty().bind(stage.heightProperty());
 	}
-	
+
 	public void updateTableView() {
 		if (service == null) {
 			throw new IllegalStateException("service was null");
 		}
-
 		List<Department> list = service.findAll();
 
 		obsList = FXCollections.observableArrayList(list);
-
 		tableViewDepartment.setItems(obsList);
 	}
 	
+	
 	private void createDialogForm(Department obj, String absoluteName, Stage parentStage) {
 		try {
+			//implementando a logica para abrir a JANELINHA de formulario
+			//para CAD as pessoas
+			//
+			//chamando o FXMLLoader para abrir uma tela em FXML
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
-			
 			
 			DepartmentFormController controller = loader.getController();
 			controller.setDepertment(obj);
@@ -113,6 +115,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.showAndWait();
 		}
+
 		catch (IOException e) {
 			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
