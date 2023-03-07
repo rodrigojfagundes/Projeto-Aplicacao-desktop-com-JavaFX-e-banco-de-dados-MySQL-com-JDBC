@@ -9,19 +9,16 @@ import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-	
-	
-	//guardando a referencia da scena/cena
+
 	private static Scene mainScene;
 	
 	@Override
-	//classe INICIO
+
 	public void start(Stage primaryStage) {
 		try {
 			//definindo onde ta o FXML... e nesse FXML ta COMO VAI SER A INTERFACE
 			//GRAFICA (GUI) do software
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/MainView.fxml"));
-			//carregando a interface grafica
 			ScrollPane scrollPane = loader.load();
 			
 			//deixando o SCROLLPANE ajustado a janela
@@ -30,7 +27,6 @@ public class Main extends Application {
 			
 			//criando a CENA passando o SCROLLPANE como argumento
 			mainScene = new Scene(scrollPane);
-			//palco da cena... o MAINSCENE é a CENA PRINCIPAL...
 			primaryStage.setScene(mainScene);
 			primaryStage.setTitle("Sample JavaFX application");
 			primaryStage.show();
@@ -39,7 +35,6 @@ public class Main extends Application {
 		}
 	}
 	
-	//metodo para pegar a REFERENCIA da SCENE, pois ela e PRIVATE
 	public static Scene getMainScene() {
 		return mainScene;
 	}
