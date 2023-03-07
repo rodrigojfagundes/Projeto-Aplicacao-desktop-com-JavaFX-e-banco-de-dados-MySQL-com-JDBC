@@ -9,6 +9,10 @@ import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+		
+	//guardando a referencia da scena/cena
+	private static Scene mainScene;
+	
 	@Override
 	//classe INICIO
 	public void start(Stage primaryStage) {
@@ -24,14 +28,20 @@ public class Main extends Application {
 			scrollPane.setFitToWidth(true);
 			
 			//criando a CENA passando o SCROLLPANE como argumento
-			Scene mainScene = new Scene(scrollPane);
-			//palco da cena... o MAINSCENE é a CENA PRINCIPAL...
+			mainScene = new Scene(scrollPane);
+			//palco da cena... o MAINSCENE é a CENA PRINCIPAL... eu acho q
+			//tela inicial EU ACHO
 			primaryStage.setScene(mainScene);
 			primaryStage.setTitle("Sample JavaFX application");
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	//metodo para pegar a REFERENCIA da SCENE
+	public static Scene getMainScene() {
+		return mainScene;
 	}
 
 	public static void main(String[] args) {
