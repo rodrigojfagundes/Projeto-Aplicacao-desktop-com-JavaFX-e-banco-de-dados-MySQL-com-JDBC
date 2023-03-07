@@ -9,24 +9,21 @@ import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-
+	
 	private static Scene mainScene;
 	
 	@Override
-
 	public void start(Stage primaryStage) {
 		try {
 			//definindo onde ta o FXML... e nesse FXML ta COMO VAI SER A INTERFACE
 			//GRAFICA (GUI) do software
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/MainView.fxml"));
-			//carregando a interface grafica
-			ScrollPane scrollPane = loader.load();
 			
-			//deixando o SCROLLPANE ajustado a janela
+			ScrollPane scrollPane = loader.load();
+
 			scrollPane.setFitToHeight(true);
 			scrollPane.setFitToWidth(true);
 			
-			//criando a CENA passando o SCROLLPANE como argumento
 			mainScene = new Scene(scrollPane);
 
 			primaryStage.setScene(mainScene);

@@ -19,10 +19,7 @@ import javafx.scene.layout.VBox;
 import model.services.DepartmentService;
 import model.services.SellerService;
 
-
 public class MainViewController implements Initializable {
-
-	// itens de controle de tela. q correspondem ao menu do GUI...
 
 	@FXML
 	private MenuItem menuItemSeller;
@@ -33,24 +30,16 @@ public class MainViewController implements Initializable {
 	@FXML
 	private MenuItem menuItemAbout;
 
-	// a baixo, vamos declarar OS METODOS para REALIZAR AS ACOES dos ITENS
-	// de MENU (MENUITEM) declarados acima... ali como VARIAVEIS...
-
-	// metodo para realizar as acoes do MenuItemSeller
 	@FXML
 	public void onMenuItemSellerAction() {
-
 		loadView("/gui/SellerList.fxml", (SellerListController controller) -> {
 			controller.setSellerService(new SellerService());
 			controller.updateTableView();
 		});
 	}
 
-	// metodo para realizar as acoes do MenuItemDEPARTMENT
-	
 	@FXML
 	public void onMenuItemDepartmentAction() {
-	
 		loadView("/gui/DepartmentList.fxml", (DepartmentListController controller) -> {
 			controller.setDepartmentService(new DepartmentService());
 			controller.updateTableView();
@@ -59,7 +48,6 @@ public class MainViewController implements Initializable {
 
 	@FXML
 	public void onMenuItemAboutAction() {
-
 		loadView("/gui/About.fxml", x -> {
 		});
 	}
@@ -73,19 +61,15 @@ public class MainViewController implements Initializable {
 
 		try {
 
-			// chamando o FXMLLoader para abrir uma tela em FXML
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			VBox newVBox = loader.load();
+
 			Scene mainScene = Main.getMainScene();
 			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
 
-
 			Node mainMenu = mainVBox.getChildren().get(0);
-
 			mainVBox.getChildren().clear();
-
 			mainVBox.getChildren().add(mainMenu);
-
 			mainVBox.getChildren().addAll(newVBox.getChildren());
 
 			T controller = loader.getController();

@@ -32,7 +32,6 @@ import javafx.stage.Stage;
 import model.entities.Department;
 import model.services.DepartmentService;
 
-//a DataChangeListener (q fica ouvindo quando algum departamento e ADD no BD)
 public class DepartmentListController implements Initializable, DataChangeListener {
 
 	private DepartmentService service;
@@ -57,7 +56,6 @@ public class DepartmentListController implements Initializable, DataChangeListen
 
 	private ObservableList<Department> obsList;
 
-
 	@FXML
 	public void onBtNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
@@ -77,22 +75,20 @@ public class DepartmentListController implements Initializable, DataChangeListen
 
 	private void initializeNodes() {
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
+
 		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
-
 		tableViewDepartment.prefHeightProperty().bind(stage.heightProperty());
 	}
 
-	// metodo q sera responsavel por ACESSAR O SERVICE, carregar os DEPARTMENT
-	// ou seja o NOME e o ID e jogar esses DEPARTMENT na OBSERVABLELIST
 	public void updateTableView() {
 		if (service == null) {
 			throw new IllegalStateException("service was null");
 		}
-
 		List<Department> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
+
 		tableViewDepartment.setItems(obsList);
 		initEditButtons();
 		initRemoveButtons();
@@ -102,6 +98,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
+
 			DepartmentFormController controller = loader.getController();
 			controller.setDepertment(obj);
 			controller.setDepartmentService(new DepartmentService());
@@ -110,14 +107,15 @@ public class DepartmentListController implements Initializable, DataChangeListen
 			controller.updateFormData();
 
 			Stage dialogStage = new Stage();
-
 			dialogStage.setTitle("Enter Department data");
+
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.setResizable(false);
 			dialogStage.initOwner(parentStage);
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.showAndWait();
 		}
+
 		catch (IOException e) {
 			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
@@ -127,6 +125,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 	public void onDataChanged() {
 		updateTableView();
 	}
+
 
 	private void initEditButtons() {
 		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
@@ -149,6 +148,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 		});
 	}
 
+
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnREMOVE.setCellFactory(param -> new TableCell<Department, Department>() {
@@ -169,7 +169,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 
 	private void removeEntity(Department obj) {
 		Optional<ButtonType> result = Alerts.showConfirmation("Confirmation", "Are you sure to delete?");
-
+	
 		if(result.get() == ButtonType.OK) {
 			if(service ==  null) {
 				throw new IllegalStateException("service was null");
