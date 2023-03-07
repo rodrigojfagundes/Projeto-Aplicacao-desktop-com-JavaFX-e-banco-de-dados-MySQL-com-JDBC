@@ -22,6 +22,7 @@ public class Constraints {
 	    });
 	}
 	
+	//metodo q recebe um textfield EU ACHO Q em TXT
 	public static void setTextFieldDouble(TextField txt) {
 		txt.textProperty().addListener((obs, oldValue, newValue) -> {
 		    	if (newValue != null && !newValue.matches("\\d*([\\.]\\d*)?")) {
@@ -29,4 +30,3 @@ public class Constraints {
                 }
 		    });
 	}
-}
