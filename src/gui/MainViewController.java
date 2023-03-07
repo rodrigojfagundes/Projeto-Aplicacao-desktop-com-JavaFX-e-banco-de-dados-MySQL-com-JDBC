@@ -21,33 +21,37 @@ import model.services.SellerService;
 
 public class MainViewController implements Initializable {
 
+
 	@FXML
 	private MenuItem menuItemSeller;
-	
+
 	@FXML
 	private MenuItem menuItemDepartment;
 
 	@FXML
 	private MenuItem menuItemAbout;
 
+
 	@FXML
 	public void onMenuItemSellerAction() {
-		loadView("/gui/SellerList.fxml", (SellerListController controller) -> {
 
+		loadView("/gui/SellerList.fxml", (SellerListController controller) -> {
 			controller.setSellerService(new SellerService());
+
 			controller.updateTableView();
 		});
 	}
 
 	@FXML
 	public void onMenuItemDepartmentAction() {
+
 		loadView("/gui/DepartmentList.fxml", (DepartmentListController controller) -> {
+
 			controller.setDepartmentService(new DepartmentService());
 			controller.updateTableView();
 		});
 	}
 
-	// metodo para realizar as acoes do MenuItemABOUT
 	@FXML
 	public void onMenuItemAboutAction() {
 		loadView("/gui/About.fxml", x -> {
@@ -62,13 +66,12 @@ public class MainViewController implements Initializable {
 	private synchronized <T> void loadView(String absoluteName, Consumer<T> initializingAction) {
 
 		try {
-
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-
 			VBox newVBox = loader.load();
 
 			Scene mainScene = Main.getMainScene();
 			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
+
 			Node mainMenu = mainVBox.getChildren().get(0);
 			mainVBox.getChildren().clear();
 			mainVBox.getChildren().add(mainMenu);

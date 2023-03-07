@@ -16,7 +16,9 @@ import javafx.util.StringConverter;
 
 public class Utils {
 
+
 	public static Stage currentStage(ActionEvent event) {
+
 		return (Stage) ((Node) event.getSource()).getScene().getWindow();
 	}
 
@@ -48,7 +50,6 @@ public class Utils {
 			return cell;
 		});
 	}
-
 
 	public static <T> void formatTableColumnDouble(TableColumn<T, Double> tableColumn, int decimalPlaces) {
 		tableColumn.setCellFactory(column -> {

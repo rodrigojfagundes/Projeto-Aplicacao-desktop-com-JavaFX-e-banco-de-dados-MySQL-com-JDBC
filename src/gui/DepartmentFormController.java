@@ -24,11 +24,11 @@ import model.exceptions.ValidationException;
 import model.services.DepartmentService;
 
 public class DepartmentFormController implements Initializable {
-	
-	private Department entity;
 
-	private DepartmentService service;
+	private Department entity;
 	
+	private DepartmentService service;
+
 	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 
 	@FXML
@@ -45,8 +45,8 @@ public class DepartmentFormController implements Initializable {
 	
 	@FXML
 	private Button btCancel;
-	
-	public void setDepertment(Department entity) {
+
+	public void setDepartment(Department entity) {
 		this.entity = entity;
 	}
 	
@@ -70,6 +70,7 @@ public class DepartmentFormController implements Initializable {
 			entity = getFormData();
 			service.SaveOrUpdate(entity);
 			notifyDataChangeListeners();
+
 			Utils.currentStage(event).close();
 		}
 		catch(ValidationException e) {
@@ -80,12 +81,11 @@ public class DepartmentFormController implements Initializable {
 			Alerts.showAlert("error saving objet", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
-		
+
 	private void notifyDataChangeListeners() {
 		for(DataChangeListener listener: dataChangeListeners) {
 			listener.onDataChanged();
 		}
-		
 	}
 
 	private Department getFormData() {
@@ -94,7 +94,7 @@ public class DepartmentFormController implements Initializable {
 		ValidationException exception = new ValidationException("validation error");
 
 		obj.setId(Utils.tryParseToInt(txtId.getText()));
-
+		
 		if(txtName.getText() == null || txtName.getText().trim().equals(""))
 		{
 			exception.addError("name", "field can't be empty");
@@ -104,7 +104,7 @@ public class DepartmentFormController implements Initializable {
 		if(exception.getErros().size() > 0) {
 			throw exception;
 		}
-		
+
 		return obj;
 	}
 
@@ -127,7 +127,7 @@ public class DepartmentFormController implements Initializable {
 			if (entity == null) {
 				throw new IllegalStateException("entity wass null");
 			}
-
+			
 			txtId.setText(String.valueOf(entity.getId()));
 			txtName.setText(entity.getName());
 		
