@@ -24,11 +24,11 @@ import model.exceptions.ValidationException;
 import model.services.DepartmentService;
 
 public class DepartmentFormController implements Initializable {
-
-	private Department entity;
 	
-	private DepartmentService service;
+	private Department entity;
 
+	private DepartmentService service;
+	
 	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 
 	@FXML
@@ -45,7 +45,7 @@ public class DepartmentFormController implements Initializable {
 	
 	@FXML
 	private Button btCancel;
-
+	
 	public void setDepartment(Department entity) {
 		this.entity = entity;
 	}
@@ -54,6 +54,7 @@ public class DepartmentFormController implements Initializable {
 		this.service = service;
 	}
 	
+
 	public void subscribeDataChangeListener(DataChangeListener listener) {
 		dataChangeListeners.add(listener);
 	}
@@ -63,6 +64,7 @@ public class DepartmentFormController implements Initializable {
 		if(entity == null) {
 			throw new IllegalStateException("entity wall null");
 		}
+
 		if (service == null) {
 			throw new IllegalStateException("service was null");
 		}
@@ -70,33 +72,36 @@ public class DepartmentFormController implements Initializable {
 			entity = getFormData();
 			service.SaveOrUpdate(entity);
 			notifyDataChangeListeners();
-
+			
 			Utils.currentStage(event).close();
 		}
 		catch(ValidationException e) {
 			setErrorMessages(e.getErros());		
 		}
 		
+
 		catch(DbException e) {
 			Alerts.showAlert("error saving objet", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
-
+		
 	private void notifyDataChangeListeners() {
 		for(DataChangeListener listener: dataChangeListeners) {
 			listener.onDataChanged();
 		}
+		
 	}
 
 	private Department getFormData() {
 		Department obj = new Department();
-
+	
 		ValidationException exception = new ValidationException("validation error");
-
-		obj.setId(Utils.tryParseToInt(txtId.getText()));
 		
+		obj.setId(Utils.tryParseToInt(txtId.getText()));
+
 		if(txtName.getText() == null || txtName.getText().trim().equals(""))
 		{
+
 			exception.addError("name", "field can't be empty");
 		}
 		obj.setName(txtName.getText());
@@ -115,6 +120,7 @@ public class DepartmentFormController implements Initializable {
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+
 		initializeNodes();
 	}
 	
@@ -124,6 +130,7 @@ public class DepartmentFormController implements Initializable {
 	}
 
 		public void updateFormData() {
+
 			if (entity == null) {
 				throw new IllegalStateException("entity wass null");
 			}
@@ -139,5 +146,4 @@ public class DepartmentFormController implements Initializable {
 			if(fields.contains("name"));
 			labelErrorName.setText(errors.get("name"));
 		}
-		
 }

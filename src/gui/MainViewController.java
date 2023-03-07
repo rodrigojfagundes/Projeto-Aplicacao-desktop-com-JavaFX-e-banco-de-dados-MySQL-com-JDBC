@@ -21,7 +21,6 @@ import model.services.SellerService;
 
 public class MainViewController implements Initializable {
 
-
 	@FXML
 	private MenuItem menuItemSeller;
 
@@ -31,13 +30,10 @@ public class MainViewController implements Initializable {
 	@FXML
 	private MenuItem menuItemAbout;
 
-
 	@FXML
 	public void onMenuItemSellerAction() {
-
 		loadView("/gui/SellerList.fxml", (SellerListController controller) -> {
 			controller.setSellerService(new SellerService());
-
 			controller.updateTableView();
 		});
 	}
@@ -46,7 +42,6 @@ public class MainViewController implements Initializable {
 	public void onMenuItemDepartmentAction() {
 
 		loadView("/gui/DepartmentList.fxml", (DepartmentListController controller) -> {
-
 			controller.setDepartmentService(new DepartmentService());
 			controller.updateTableView();
 		});
@@ -68,7 +63,6 @@ public class MainViewController implements Initializable {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			VBox newVBox = loader.load();
-
 			Scene mainScene = Main.getMainScene();
 			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
 
@@ -82,8 +76,8 @@ public class MainViewController implements Initializable {
 		}
 
 		catch (IOException e) {
-			Alerts.showAlert("IO Exception", "error loading view", e.getMessage(), AlertType.ERROR);
 
+			Alerts.showAlert("IO Exception", "error loading view", e.getMessage(), AlertType.ERROR);
 		}
 	}
 }
