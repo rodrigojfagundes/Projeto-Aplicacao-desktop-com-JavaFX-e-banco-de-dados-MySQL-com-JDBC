@@ -74,6 +74,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 	}
 
 	private void initializeNodes() {
+
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
 
 		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -83,12 +84,12 @@ public class DepartmentListController implements Initializable, DataChangeListen
 	}
 
 	public void updateTableView() {
+
 		if (service == null) {
 			throw new IllegalStateException("service was null");
 		}
 		List<Department> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
-
 		tableViewDepartment.setItems(obsList);
 		initEditButtons();
 		initRemoveButtons();
@@ -96,9 +97,9 @@ public class DepartmentListController implements Initializable, DataChangeListen
 
 	private void createDialogForm(Department obj, String absoluteName, Stage parentStage) {
 		try {
+
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
-
 			DepartmentFormController controller = loader.getController();
 			controller.setDepertment(obj);
 			controller.setDepartmentService(new DepartmentService());
@@ -108,14 +109,12 @@ public class DepartmentListController implements Initializable, DataChangeListen
 
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Enter Department data");
-
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.setResizable(false);
 			dialogStage.initOwner(parentStage);
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.showAndWait();
 		}
-
 		catch (IOException e) {
 			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
@@ -125,7 +124,6 @@ public class DepartmentListController implements Initializable, DataChangeListen
 	public void onDataChanged() {
 		updateTableView();
 	}
-
 
 	private void initEditButtons() {
 		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
@@ -140,14 +138,12 @@ public class DepartmentListController implements Initializable, DataChangeListen
 					setGraphic(null);
 					return;
 				}
-
 				setGraphic(button);
 				button.setOnAction(
 						event -> createDialogForm(obj, "/gui/DepartmentForm.fxml", Utils.currentStage(event)));
 			}
 		});
 	}
-
 
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));

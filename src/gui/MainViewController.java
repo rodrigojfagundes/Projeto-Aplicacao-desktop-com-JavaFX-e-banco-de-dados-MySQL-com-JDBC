@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import model.services.DepartmentService;
 import model.services.SellerService;
 
+
 public class MainViewController implements Initializable {
 
 	@FXML
@@ -66,15 +67,18 @@ public class MainViewController implements Initializable {
 
 			Scene mainScene = Main.getMainScene();
 			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
-
 			Node mainMenu = mainVBox.getChildren().get(0);
+
 			mainVBox.getChildren().clear();
+
 			mainVBox.getChildren().add(mainMenu);
+
 			mainVBox.getChildren().addAll(newVBox.getChildren());
 
 			T controller = loader.getController();
 			initializingAction.accept(controller);
 		}
+
 		catch (IOException e) {
 			Alerts.showAlert("IO Exception", "error loading view", e.getMessage(), AlertType.ERROR);
 

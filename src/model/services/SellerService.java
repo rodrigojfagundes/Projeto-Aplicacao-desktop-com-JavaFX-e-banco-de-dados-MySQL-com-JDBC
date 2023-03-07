@@ -10,13 +10,12 @@ import model.entities.Seller;
 public class SellerService {
 	
 	private SellerDao dao = DaoFactory.createSellerDao();
-	
+
 	public List<Seller> findAll(){
 		return dao.findAll();
 	}
 	
 	public void SaveOrUpdate(Seller obj) {
-	
 		if(obj.getId() == null) {
 			dao.insert(obj);
 		}
