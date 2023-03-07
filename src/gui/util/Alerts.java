@@ -6,6 +6,8 @@ import javafx.scene.control.Alert.AlertType;
 //criando a classe alerts
 public class Alerts {
 	
+	//metodo show alerts q recebe alguns atributos como title, header, contentet
+	//etc..
 	public static void showAlert(String title, String header, String content, AlertType type) {
 		Alert alert = new Alert(type);
 		alert.setTitle(title);
