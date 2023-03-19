@@ -25,7 +25,6 @@ depois prosseguir estudando, de forma confortável, as especificidades que desej
  Update Main.java <br>
 
 
-
 ### Main view design <br>
 <b>Checklist: </b><br> 
 Design MainView.fxml<br> 
