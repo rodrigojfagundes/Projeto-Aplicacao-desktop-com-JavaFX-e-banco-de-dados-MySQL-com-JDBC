@@ -1,6 +1,3 @@
-# README_WORKSHOP_JAVA_FX_JDBC
-
-
 # workshop-javafx-jdbc
 
 ## Curso: Java COMPLETO 2022 Programação Orientada a Objetos + Projetos | Udemy
