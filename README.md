@@ -1,3 +1,6 @@
+# README_WORKSHOP_JAVA_FX_JDBC
+
+
 # workshop-javafx-jdbc
 
 ## Curso: Java COMPLETO 2022 Programação Orientada a Objetos + Projetos | Udemy
@@ -10,13 +13,36 @@
 <a href="https://github.com/rodrigojfagundes/Java-COMPLETO-2022-POO-Projetos-Comentados-/tree/main/Sessao%2023%20-%20workshopt-javafx-jdbc/328%20-%20Saving%20seller/workshop-javafx-jdbc">aqui</a></p>
 
 
+
+
+
+
 <b>Objetivo geral:</b>
 
  Introduzir o aluno ao desenvolvimento de aplicações JavaFX com JDBC <br>
  Permitir que o aluno conheça os fundamentos e a utilização das ferramentas, de modo que ele possa 
-depois prosseguir estudando, de forma confortável, as especificidades que desejar<br>
+ depois prosseguir estudando, de forma confortável, as especificidades que desejar<br>
 
 
+### Tela inicial do sistema
+
+<img src="https://raw.githubusercontent.com/rodrigojfagundes/imagens_para_readme/main/Nelio_Alves/Java_Completo_POO_e_Projetos/Sessao%2023/workshop-javafx-jdbc/1.png">
+
+### Tela de vendedores cadastrados
+
+<img src="https://raw.githubusercontent.com/rodrigojfagundes/imagens_para_readme/main/Nelio_Alves/Java_Completo_POO_e_Projetos/Sessao%2023/workshop-javafx-jdbc/2.png">
+
+### Tela de cadastro de vendedores
+
+<img src="https://raw.githubusercontent.com/rodrigojfagundes/imagens_para_readme/main/Nelio_Alves/Java_Completo_POO_e_Projetos/Sessao%2023/workshop-javafx-jdbc/3.png">
+
+### Tela de departamentos cadastrados
+
+<img src="https://raw.githubusercontent.com/rodrigojfagundes/imagens_para_readme/main/Nelio_Alves/Java_Completo_POO_e_Projetos/Sessao%2023/workshop-javafx-jdbc/4.png">
+
+### Tela para cadastrar um novo departamento
+
+<img src="https://raw.githubusercontent.com/rodrigojfagundes/imagens_para_readme/main/Nelio_Alves/Java_Completo_POO_e_Projetos/Sessao%2023/workshop-javafx-jdbc/5.png">
 
 ### Main view<br>
 <b>Checklist:</b><br> 
